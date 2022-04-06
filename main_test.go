@@ -25,25 +25,24 @@ func Test_primeReciprocalRepeatsAfter(t *testing.T) {
 
 func Test_repeats(t *testing.T) {
 	cases := [...]struct {
-		Input    string
+		Input    []int
 		Expected bool
 	}{
-		{"", false},
-		{"a", false},
-		{"ab", false},
-		{"aa", true},
-		{"aaa", false},
-		{"abaa", false},
-		{"abab", true},
-		{"abaab", false},
-		{"abaaba", true},
-		{"ababab", false},
-		{"abababa", false},
-		{"abcdabc", false},
-		{"abcdabcd", true},
-		{"abcdefghij", false},
-		{"abcdefabcd", false},
-		{"abcdeabcde", true},
+		{nil, false},
+		{[]int{}, false},
+		{[]int{0}, false},
+		{[]int{0, 1}, false},
+		{[]int{0, 0}, true},
+		{[]int{0, 0, 0}, false},
+		{[]int{0, 1, 0, 0}, false},
+		{[]int{0, 1, 0, 1}, true},
+		{[]int{0, 1, 0, 0, 1}, false},
+		{[]int{0, 1, 0, 0, 1, 0}, true},
+		{[]int{0, 1, 0, 1, 0, 1}, false},
+		{[]int{0, 1, 0, 1, 0, 1, 0}, false},
+		{[]int{0, 1, 0, 1, 0, 1, 2}, false},
+		{[]int{0, 1, 2, 3, 0, 1, 2, 3}, true},
+		{[]int{1, 2, 3, 4, 5, 6, 7, 8}, false},
 	}
 
 	for _, tc := range cases {

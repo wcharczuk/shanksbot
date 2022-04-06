@@ -5,7 +5,6 @@ import (
 	"math/big"
 	"os"
 	"strconv"
-	"strings"
 )
 
 func main() {
@@ -38,7 +37,7 @@ func isPrime(prime int64) bool {
 }
 
 func primeReciprocalRepeatsAfter(prime int) int {
-	seen := ""
+	seen := make([]int, 0, prime-1)
 
 	dividend := 0
 	remainder := 1
@@ -52,22 +51,31 @@ func primeReciprocalRepeatsAfter(prime int) int {
 		dividend = remainder / prime
 		remainder = remainder % prime
 		if zeros > 1 {
-			seen = seen + strings.Repeat("0", zeros-1) + strconv.Itoa(dividend)
+			for x := 0; x < zeros-1; x++ {
+				seen = append(seen, 0)
+			}
+			seen = append(seen, dividend)
 		} else {
-			seen = seen + strconv.Itoa(dividend)
+			seen = append(seen, dividend)
 		}
 	}
 	return len(seen) >> 1
 }
 
-func repeats(str string) bool {
-	strlen := len(str)
-	if strlen < 2 {
+func repeats(i []int) bool {
+	ilen := len(i)
+	if ilen < 2 {
 		return false
 	}
-	if strlen%2 != 0 {
+	if ilen%2 != 0 {
 		return false
 	}
-	middle := strlen >> 1
-	return string(str[0:middle]) == string(str[middle:])
+	middle := ilen >> 1
+
+	for x := 0; x < middle; x++ {
+		if i[x] != i[x+middle] {
+			return false
+		}
+	}
+	return true
 }
